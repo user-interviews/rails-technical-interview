@@ -1,0 +1,11 @@
+.form-error-messages {
+  color: theme-color("danger");
+
+  ul {
+    list-style: none;
+  }
+
+  .alert-error {
+    @extend .alert-danger;
+  }
+}

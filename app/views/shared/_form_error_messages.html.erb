@@ -1,0 +1,16 @@
+<% show_error_list = true if local_assigns[:show_error_list].nil? %>
+<% model_noun = 'form' if local_assigns[:model_noun].nil? %>
+<% if !model.nil? && model.errors.any? %>
+  <div class="form-error-messages">
+    <div class="alert alert-error">
+      The <%= model_noun %> contains <%= pluralize(model.errors.size, 'error') %>.
+    </div>
+    <% if show_error_list %>
+      <ul>
+        <% model.errors.full_messages.each do |msg| %>
+          <li>* <%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>

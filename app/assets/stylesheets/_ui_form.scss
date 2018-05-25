@@ -1,0 +1,52 @@
+.ui-form {
+  .form-group {
+    @include make-row();
+
+    $label-width: 4;
+
+    background-color: $gray-100;
+    padding: 1rem;
+
+    &--submit {
+      background-color: rgba(0, 0, 0, 0);
+
+      input {
+        margin: auto;
+      }
+    }
+
+    &__form-label {
+      @include make-col-ready();
+      @include make-col(12);
+
+      @include media-breakpoint-up(md) {
+        @include make-col($label-width);
+      }
+    }
+
+    &__form-input {
+      @include make-col-ready();
+      @include make-col(12);
+
+      margin-top: .5rem;
+
+      @include media-breakpoint-up(md) {
+        @include make-col(12 - $label-width);
+
+        margin-top: 0;
+      }
+    }
+
+    &__form-input-description {
+      @include make-col-ready();
+      @include make-col(12);
+
+      margin-top: .5rem;
+
+      @include media-breakpoint-up(md) {
+        @include make-col(12 - $label-width);
+        @include make-col-offset($label-width);
+      }
+    }
+  }
+}

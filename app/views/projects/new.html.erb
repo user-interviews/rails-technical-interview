@@ -1,0 +1,69 @@
+<div class="form-page">
+  <div class="container">
+    <h1>New Project</h1>
+    <div class="row">
+      <div class="col-form">
+        <%= render 'shared/form_error_messages', model: @project %>
+
+        <%= form_for @project, html: { class: 'ui-form' } do |f| %>
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :internal_name, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.text_field :internal_name, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :public_title, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.text_field :public_title, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :interview_type, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%=
+                f.select :interview_type,
+                  options_for_select(
+                    Project.interview_types.map { |k, _| [k.titleize, k] },
+                    @project.interview_type,
+                  ),
+                  { include_blank: true },
+                  { class: 'form-control' }
+              %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :requested_participants, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.number_field :requested_participants, class: 'form-control', min: 0 %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :compensation_amount, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.number_field :compensation_amount, class: 'form-control', min: 0, step: 'any' %>
+            </div>
+          </div>
+
+          <div class="form-group form-group--submit">
+            <%= f.submit 'Create project', class: 'btn btn-lg btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.form-page {
+  @extend .padded-page;
+
+  h1 {
+    text-align: center;
+  }
+
+  .col-form {
+    @include make-col-ready();
+    @include make-col(12);
+
+    @include media-breakpoint-up(md) {
+      @include make-col(8);
+      @include make-col-offset(2);
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<div class="form-page">
+  <div class="container">
+    <h1>Sign up</h1>
+    <div class="row">
+      <div class="col-form">
+        <%= render 'shared/form_error_messages', model: @user %>
+
+        <%= form_for @user, url: sign_up_path, html: { class: 'ui-form' } do |f| %>
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :email, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.text_field :email, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :first_name, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.text_field :first_name, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :last_name, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.text_field :last_name, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :password, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.password_field :password, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__form-label">
+              <%= f.label :password_confirmation, class: 'control-label' %>
+            </div>
+            <div class="form-group__form-input">
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group form-group--submit">
+            <%= f.submit 'Sign up', class: 'btn btn-lg btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+@import "bootstrap";
+@import "jquery-ui";
+
+@import "form_error_messages";
+@import "form_page";
+@import "header_navbar";
+@import "ui_form";
+
+body {
+  padding-top: $nav-link-height + ($navbar-padding-y * 2);
+}
+
+.padded-page {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
