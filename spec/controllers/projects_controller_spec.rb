@@ -52,4 +52,42 @@ RSpec.describe ProjectsController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
+
+  describe 'show' do
+    let(:project) { FactoryBot.create(:project) }
+
+    def view_show(params_project = project)
+      get :show, id: params_project.id
+    end
+
+    def expect_redirect
+      expect(response).to redirect_to(root_path)
+    end
+
+    def expect_render(view_project = project)
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template(:show)
+      expect(assigns[:project]).to eql(view_project)
+    end
+
+    it 'redirects if you are not signed in' do
+      view_show
+      expect_redirect
+    end
+
+    it 'redirects if you are signed in as a different user' do
+      other_user = FactoryBot.create(:user)
+      controller.sign_in(other_user)
+
+      view_show
+      expect_redirect
+    end
+
+    it 'renders the page if you are signed in as the owner' do
+      controller.sign_in(project.user)
+
+      view_show
+      expect_render
+    end
+  end
 end

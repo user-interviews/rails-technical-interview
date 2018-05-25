@@ -7,5 +7,6 @@ class ApplicationController < ActionController::Base
 
   private
 
+  include FlashConcern
   include SessionsConcern
 end

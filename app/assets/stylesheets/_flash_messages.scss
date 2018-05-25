@@ -1,0 +1,20 @@
+.flash-messages {
+  $top-padding: 1rem;
+
+  position: fixed;
+  left: 50%;
+  top: $top-padding + $ui-navbar-height;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: $zindex-flash;
+
+  .alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    i {
+      cursor: pointer;
+    }
+  }
+}

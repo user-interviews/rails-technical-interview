@@ -26,11 +26,17 @@ module SessionsConcern
   end
 
   def redirect_if_signed_in
-    redirect_to user_path(current_user) if signed_in?
+    if signed_in?
+      flash_error('You are already signed in')
+      redirect_to user_path(current_user)
+    end
   end
 
   def redirect_unless_signed_in
-    redirect_to sign_in_path unless signed_in?
+    unless signed_in?
+      flash_error('Please sign in')
+      redirect_to sign_in_path
+    end
   end
 
   def sign_in(user)

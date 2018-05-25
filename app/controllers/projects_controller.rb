@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params.merge(user: current_user))
 
     if @project.save
+      flash_success('Project created!')
       redirect_to project_path(@project)
     else
       render :new
@@ -19,6 +20,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    redirect_if_not_owner(@project)
   end
 
   private
@@ -31,5 +33,12 @@ class ProjectsController < ApplicationController
       :public_title,
       :requested_participants,
     )
+  end
+
+  def redirect_if_not_owner(project)
+    if !signed_in? || !current_user?(project.user)
+      flash_error('Unauthorized access')
+      redirect_to root_path
+    end
   end
 end
