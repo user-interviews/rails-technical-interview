@@ -42,7 +42,7 @@ RSpec.describe ProjectsController, type: :controller do
 
       new_project = Project.last
       expect(response).to redirect_to(project_path(new_project))
-      expect(new_project.user_id).to eql(user.id)
+      expect(new_project.owner).to eql(user)
     end
 
     it 'renders new if there were errors on the project' do
@@ -84,7 +84,7 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     it 'renders the page if you are signed in as the owner' do
-      controller.sign_in(project.user)
+      controller.sign_in(project.owner)
 
       view_show
       expect_render

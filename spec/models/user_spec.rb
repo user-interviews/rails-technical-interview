@@ -50,7 +50,7 @@ RSpec.describe User, type: :model do
 
   describe 'projects' do
     let(:user) { FactoryBot.create(:user) }
-    let(:project) { FactoryBot.create(:project, user: user) }
+    let(:project) { FactoryBot.create(:project, owner: user) }
 
     it 'does not destroy a project if the user record is destroyed' do
       project

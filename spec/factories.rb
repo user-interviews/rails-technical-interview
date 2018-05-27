@@ -4,7 +4,7 @@ FactoryBot.define do
   end
 
   factory :project do
-    association :user
+    owner { build(:user) }
 
     internal_name 'Project [NAME]'
     public_title 'Project [TITLE]'
@@ -20,15 +20,6 @@ FactoryBot.define do
     trait :charged do
       launched_at Time.zone.now - 1.week
       charged_at Time.zone.now
-    end
-
-    after(:build, :stub) do |project, evaluator|
-      project.project_accesses << build(
-        :project_access,
-        :owner,
-        project: project,
-        user: evaluator.user,
-      )
     end
   end
 

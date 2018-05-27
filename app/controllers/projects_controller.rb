@@ -8,9 +8,12 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params.merge(user: current_user))
+    @project = Project.new(project_params)
 
     if @project.save
+      @project.owner = current_user
+      @project.save!
+
       flash_success('Project created!')
       redirect_to project_path(@project)
     else
@@ -36,7 +39,7 @@ class ProjectsController < ApplicationController
   end
 
   def redirect_if_not_owner(project)
-    if !signed_in? || !current_user?(project.user)
+    if !signed_in? || !current_user?(project.owner)
       flash_error('Unauthorized access')
       redirect_to root_path
     end
