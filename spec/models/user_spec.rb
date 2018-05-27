@@ -61,6 +61,19 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'project accesses' do
+    let(:user) { FactoryBot.build(:user) }
+    let(:project_access) { FactoryBot.build(:project_access, user: user) }
+
+    it 'destroys existing project accesses upon destruction' do
+      user.save!
+      project_access.save!
+
+      user.destroy
+      expect { project_access.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe 'user remember tokens' do
     it 'destroys all user tokens on delete' do
       user = FactoryBot.create(:user)

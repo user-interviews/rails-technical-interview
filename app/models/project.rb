@@ -12,6 +12,8 @@ class Project < ActiveRecord::Base
 
   belongs_to :user, required: false
 
+  has_many :project_accesses, dependent: :destroy
+
   enum interview_type: {
     in_person: 1,
     remote: 2,

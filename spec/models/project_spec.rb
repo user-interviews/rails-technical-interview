@@ -84,4 +84,21 @@ RSpec.describe Project, type: :model do
       expect(project.launched_at).to be(nil)
     end
   end
+
+  describe 'project accesses' do
+    let(:project) { FactoryBot.build(:project) }
+
+    it 'has an owner when built by the factory' do
+      expect(project.project_accesses.size).to eql(1)
+      expect(project.project_accesses.first.owner).to be(true)
+    end
+
+    it 'destroys existing project accesses upon destruction' do
+      project.save!
+      project_access = project.project_accesses.first
+
+      project.destroy
+      expect { project_access.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

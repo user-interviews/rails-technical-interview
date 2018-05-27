@@ -21,6 +21,26 @@ FactoryBot.define do
       launched_at Time.zone.now - 1.week
       charged_at Time.zone.now
     end
+
+    after(:build, :stub) do |project, evaluator|
+      project.project_accesses << build(
+        :project_access,
+        :owner,
+        project: project,
+        user: evaluator.user,
+      )
+    end
+  end
+
+  factory :project_access do
+    association :project
+    association :user
+
+    owner false
+
+    trait :owner do
+      owner true
+    end
   end
 
   factory :user do
