@@ -1,0 +1,17 @@
+<div class="padded-page">
+  <div class="container">
+    <h1><%= @user.email %></h1>
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2">
+        <h2>My projects</h2>
+        <% @my_projects.each do |p| %>
+          <a href="<%= project_path(p) %>"><%= p.internal_name %></a>
+        <% end %>
+        <h2>Shared projects</h2>
+        <% @shared_projects.each do |p| %>
+          <a href="<%= project_path(p) %>"><%= p.internal_name %> - <%= p.owner.email %></a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

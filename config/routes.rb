@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get '/sign-up', to: 'users#new', as: :sign_up
   post '/sign-up', to: 'users#create'
 
+  get '/projects/:id/share', to: 'projects#share', as: :share_project
+  get '/projects/:id/perform_share', to: 'projects#perform_share', as: :perform_share_project
+
   resources :projects, only: [:new, :create, :show]
   resources :users, only: [:show]
 end

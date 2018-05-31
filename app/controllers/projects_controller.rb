@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectsController < ApplicationController
-  before_action :redirect_unless_signed_in, only: [:create, :new]
+  before_action :redirect_unless_signed_in, only: [:create, :new, :share]
 
   def new
     @project = Project.new
@@ -24,6 +24,25 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     redirect_if_not_owner(@project)
+  end
+
+  def share
+    @project = Project.find(params[:id])
+    redirect_if_not_owner(@project)
+  end
+
+  def perform_share
+    @project = Project.find(params[:id])
+
+    user = User.find(params[:user_id])
+    access = ProjectAccess.new(
+      user_id: user.id,
+      project_id: @project.id,
+    )
+
+    access.save
+
+    render 'share'
   end
 
   private

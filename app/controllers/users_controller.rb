@@ -20,6 +20,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @my_projects = Project.joins(:project_accesses).where(project_accesses: { owner: true, user_id: @user.id })
+    @shared_projects = Project.joins(:project_accesses).where(project_accesses: { owner: false, user_id: @user.id })
   end
 
   private

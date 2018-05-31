@@ -90,4 +90,25 @@ RSpec.describe ProjectsController, type: :controller do
       expect_render
     end
   end
+
+  describe 'share' do
+    let(:project) { FactoryBot.create(:project, owner: user) }
+
+    it 'redirects if you are not signed in' do
+      get :share, id: project.id
+      expect(response).to redirect_to(sign_in_path)
+    end
+
+    it 'redirects if you are not the owner' do
+      controller.sign_in(FactoryBot.create(:user))
+      get :share, id: project.id
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'renders if you are signed in' do
+      controller.sign_in(user)
+      get :share, id: project.id
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
