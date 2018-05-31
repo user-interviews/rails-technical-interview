@@ -8,14 +8,18 @@ class Project < ActiveRecord::Base
     :public_title,
     :requested_participants,
   )
-  validates_presence_of :user, on: :create
 
-  belongs_to :user, required: false
+  has_many :project_accesses, dependent: :nullify
+  has_many :users, through: :project_accesses
 
   enum interview_type: {
     in_person: 1,
     remote: 2,
   }
+
+  scope :for_account, ->(user_id) do
+    joins('JOINS project_accesses ON user_id = user_id')
+  end
 
   def charged=(toggle)
     self.charged_at = toggle ? Time.zone.now : nil
@@ -31,5 +35,18 @@ class Project < ActiveRecord::Base
 
   def launched?
     launched_at.present?
+  end
+
+  def owner
+    project_accesses.owners.first&.user
+  end
+
+  def owner=(new_owner)
+    project_accesses.where(owner: true).destroy_all
+    project_accesses.build(owner: true, user: new_owner) if new_owner
+  end
+
+  def owner?(user)
+    project_accesses.where(owner: true).detect { |a| a.user_id == user.id }.present?
   end
 end

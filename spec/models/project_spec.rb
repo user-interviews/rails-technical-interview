@@ -10,18 +10,6 @@ RSpec.describe Project, type: :model do
       expect(project.save).to be(true)
     end
 
-    it 'requires a user on create' do
-      project.user = nil
-      expect(project.save).to be(false)
-      expect(project.errors[:user]).to include('can\'t be blank')
-    end
-
-    it 'does not require a user on update' do
-      project.save!
-      project.user = nil
-      expect(project.save).to be(true)
-    end
-
     it 'requires a compensation amount' do
       project.compensation_amount = nil
       expect(project.save).to be(false)
@@ -82,6 +70,63 @@ RSpec.describe Project, type: :model do
 
       project.launched = false
       expect(project.launched_at).to be(nil)
+    end
+  end
+
+  describe 'owner' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:project) { FactoryBot.create(:project) }
+
+    it 'grabs the current owner of the project' do
+      expect(project.owner).to eql(project.project_accesses.where(owner: true).first.user)
+    end
+
+    it 'can be used to update the current owner of the project' do
+      expect(project.owner).not_to eql(user)
+      project.owner = user
+      project.save!
+      project.reload
+
+      expect(project.owner).to eql(user)
+    end
+
+    it 'can clear out the previous owner of a project' do
+      expect(project.owner).not_to be(nil)
+
+      project.owner = nil
+      project.save!
+      project.reload
+
+      expect(project.owner).to be(nil)
+      expect(project.project_accesses.where(owner: true)).to be_empty
+    end
+
+    it 'can set a owner if there is no current owner' do
+      project.owner = nil
+      project.reload
+
+      project.owner = user
+      project.save!
+      project.reload
+
+      expect(project.owner).to eql(user)
+    end
+  end
+
+  describe 'project accesses' do
+    let(:project) { FactoryBot.build(:project) }
+
+    it 'has an owner when built by the factory' do
+      expect(project.project_accesses.size).to eql(1)
+      expect(project.project_accesses.first.owner).to be(true)
+    end
+
+    it 'destroys existing project accesses upon destruction' do
+      project.save!
+      project_access = project.project_accesses.first
+
+      project.destroy
+      expect { project_access.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

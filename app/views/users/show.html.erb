@@ -1,0 +1,31 @@
+<div class="padded-page">
+  <div class="container">
+    <h1><%= @user.email %></h1>
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2">
+        <h2>My projects</h2>
+        <% @my_projects.each do |p| %>
+          <a href="<%= project_path(p) %>"><%= p.internal_name %></a>
+          <% unless project.launched? || project.charged? %>
+            <%= 'DRAFT' %>
+          <% end %>
+          <br/>
+        <% end %>
+        <% if @my_projects.count == 0 %>
+          <h3>No projects!</h3>
+        <% end %>
+
+        <% if @shared_projects %>
+          <h2>Shared projects</h2>
+          <% @shared_projects.each do |p| %>
+            <a href="<%= proecjt_path(p) %>"><%= '#{p.internal_name} - #{p.owner.email}' %></a>
+            <% if project.launched? && project.launched_at > Time.now - 1.day && !project.charged? %>
+              NEW PROJECT
+            <% end %>
+            <br/>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

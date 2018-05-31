@@ -50,7 +50,7 @@ RSpec.describe User, type: :model do
 
   describe 'projects' do
     let(:user) { FactoryBot.create(:user) }
-    let(:project) { FactoryBot.create(:project, user: user) }
+    let(:project) { FactoryBot.create(:project, owner: user) }
 
     it 'does not destroy a project if the user record is destroyed' do
       project
@@ -58,6 +58,19 @@ RSpec.describe User, type: :model do
       user.destroy
       expect { project.reload }.not_to raise_error
       expect(project.id).not_to be(nil)
+    end
+  end
+
+  describe 'project accesses' do
+    let(:user) { FactoryBot.build(:user) }
+    let(:project_access) { FactoryBot.build(:project_access, user: user) }
+
+    it 'destroys existing project accesses upon destruction' do
+      user.save!
+      project_access.save!
+
+      user.destroy
+      expect { project_access.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
