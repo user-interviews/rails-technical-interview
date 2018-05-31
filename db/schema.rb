@@ -24,10 +24,6 @@ ActiveRecord::Schema.define(version: 20180527211709) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "project_accesses", ["project_id", "user_id"], name: "index_project_accesses_on_project_id_and_user_id", unique: true, using: :btree
-  add_index "project_accesses", ["project_id"], name: "index_project_accesses_on_project_id", using: :btree
-  add_index "project_accesses", ["user_id"], name: "index_project_accesses_on_user_id", using: :btree
-
   create_table "projects", force: :cascade do |t|
     t.integer  "compensation_amount"
     t.string   "internal_name"
@@ -61,7 +57,5 @@ ActiveRecord::Schema.define(version: 20180527211709) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
-  add_foreign_key "project_accesses", "projects"
-  add_foreign_key "project_accesses", "users"
   add_foreign_key "user_remember_tokens", "users"
 end

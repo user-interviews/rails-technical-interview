@@ -8,13 +8,5 @@ class CreateProjectAccesses < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-
-    add_index :project_accesses, :project_id
-    add_foreign_key :project_accesses, :projects
-
-    add_index :project_accesses, :user_id
-    add_foreign_key :project_accesses, :users
-
-    add_index :project_accesses, [:project_id, :user_id], unique: true
   end
 end
