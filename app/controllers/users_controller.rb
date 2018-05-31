@@ -22,6 +22,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @my_projects = Project.joins(:project_accesses).where(project_accesses: { owner: true, user_id: @user.id })
     @shared_projects = Project.joins(:project_accesses).where(project_accesses: { owner: false, user_id: @user.id })
+
+    puts "Found #{@my_projects.count} projects for me!"
+    puts "Found #{@shared_projects.count} projects shared with me."
   end
 
   private

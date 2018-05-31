@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
     :requested_participants,
   )
 
-  has_many :project_accesses, dependent: :destroy
+  has_many :project_accesses, dependent: :nullify
   has_many :users, through: :project_accesses
 
   enum interview_type: {

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get '/projects/:id/share', to: 'projects#share', as: :share_project
   get '/projects/:id/perform_share', to: 'projects#perform_share', as: :perform_share_project
+  get '/projects/:id/revoke_share', to: 'projects#revoke_share', as: :revoke_share_project
 
   resources :projects, only: [:new, :create, :show]
   resources :users, only: [:show]

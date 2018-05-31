@@ -42,6 +42,15 @@ class ProjectsController < ApplicationController
     render 'share'
   end
 
+  def revoke_share
+    @project = Project.find(params[:id])
+
+    user = User.find(params[:user_id])
+    ProjectAccess.where(user_id: user.id, project_id: project.id).first.delete
+
+    redirect_to "/projects/#{@project.id}"
+  end
+
   private
 
   def project_params
