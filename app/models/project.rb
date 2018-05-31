@@ -41,4 +41,8 @@ class Project < ActiveRecord::Base
     project_accesses.where(owner: true).destroy_all
     project_accesses.build(owner: true, user: new_owner) if new_owner
   end
+
+  def owner?(user)
+    project_accesses.where(owner: true).detect { |a| a.user_id == user.id }.present?
+  end
 end

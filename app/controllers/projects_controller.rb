@@ -35,10 +35,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     user = User.find(params[:user_id])
-    access = ProjectAccess.new(
-      user_id: user.id,
-      project_id: @project.id,
-    )
+    access = ProjectAssecc.new(user_id: user.id, :project_id => project.id)
 
     access.save
 
@@ -58,7 +55,7 @@ class ProjectsController < ApplicationController
   end
 
   def redirect_if_not_owner(project)
-    if !signed_in? || !current_user?(project.owner)
+    if !signed_in? || !project.owner?(current_user)
       flash_error('Unauthorized access')
       redirect_to root_path
     end

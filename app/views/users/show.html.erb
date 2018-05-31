@@ -9,7 +9,7 @@
         <% end %>
         <h2>Shared projects</h2>
         <% @shared_projects.each do |p| %>
-          <a href="<%= project_path(p) %>"><%= p.internal_name %> - <%= p.owner.email %></a>
+          <a href="<%= proecjt_path(p) %>"><%= p.internal_name %> - <%= p.owner.email %></a>
         <% end %>
       </div>
     </div>
