@@ -19,8 +19,56 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
+    @project = Project.includes(:project_participants).find(params[:id])
     redirect_if_not_owner(@project)
+  end
+
+  def sign_up
+    @project = Project.find(params[:id])
+
+    num_participants = Project.select("COUNT(project_participants.id) AS num_participants").joins(
+      "LEFT JOIN project_participants ON project_participants.project_id = #{params[:id]}"
+    ).group('projects.id').where(id: params[:id]).first[:num_participants]
+
+    unless num_participants < @project.requested_participants
+      flash.now[:error] = 'Project is full!'
+    end
+  end
+
+  def perform_sign_up
+    @project = Project.includes(:project_participants).find(params[:id])
+
+    participant = Participant.find_by_email(params[:email])
+    if participant.password == params[:password]
+      puts 'Invalid password!!'
+
+      flash[:error] = 'Invalid password found.'
+      render 'sign_up'
+    end
+
+    num_participants = Project.select("COUNT(project_participants.id) AS num_participants").joins(
+      "LEFT JOIN project_participants ON project_participants.project_id = #{params[:id]}"
+    ).group('projects.id').where(id: params[:id]).first[:num_participants]
+
+    unless num_participants < @project.requested_participants
+      puts 'Project was full!'
+
+      flash.now[:error] = 'Project is full!'
+      render 'sign_up'
+    end
+
+    if @project.project_participants.where(participant_id: participant.id).exists?
+      flash.now[:error] = 'That participant is already signed up!'
+      render 'sign_up'
+    end
+
+    ProjectParticipant.create(project_id: params[:id], :participant_id => participant.id)
+
+    Mandrill::send_email('signup-complete', participant.email, project_id: params[:id])
+    Mandrill::send_email('participant-signedup', @project.user.email, project_id: params[:id], participant_email: params[:email])
+
+    flash[:success] = 'You have signed up!'
+    redirect_to participant_path(participant)
   end
 
   private

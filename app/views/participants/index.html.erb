@@ -1,0 +1,8 @@
+<div class="padded-page">
+  <h1>Participants</h1>
+  <ul>
+    <% Participant.all.each do |participant| %><li><%= participant.email %>
+      <%= ProjectParticipant.where.not(approved_at: nil).where(participant_id: participant.id).count %> approved projects!
+        </li><% end %>
+  </ul>
+</div>
