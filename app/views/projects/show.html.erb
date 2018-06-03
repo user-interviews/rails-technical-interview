@@ -1,3 +1,7 @@
 <div class="padded-page">
   <h1 class="text-center"><%= @project.internal_name %></h1>
+  <h2 class="text-center">Shared with:</h2>
+  <% @project.users.each do |user| %>
+    <%= user.email %> <%= link_to 'Remove access', revoke_project_share_path(@project.id, user_id: user.id) %><br/>
+  <% end %>
 </div>
