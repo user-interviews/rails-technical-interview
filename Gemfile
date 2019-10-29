@@ -38,7 +38,7 @@ end
 group :test do
   gem 'capybara', '~>2.17' # UI Testing from Rails
   gem 'factory_bot_rails', '~>4.8' # Test mock framework
-  gem 'nokogiri', '~> 1.8' # XML Parsing
+  gem 'nokogiri', '~> 1.10' # XML Parsing
   gem 'timecop', '~>0.9' # Freeze test time
 end
 
