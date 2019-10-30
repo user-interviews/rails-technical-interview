@@ -12,7 +12,7 @@ gem 'pg', '~> 0.21' # Last postgres version usable by ActiveRecord 4.2.10
 
 # Asset Pipeline
 gem 'sass-rails', '~> 5.0' # SCSS support
-gem 'sprockets', '~> 3.0' # Asset pipeline
+gem 'sprockets', '~> 3.7' # Asset pipeline
 gem 'sprockets-rails', '~> 3.0' # Asset pipeline
 gem 'uglifier', '~> 4.1' # JS Minification
 
