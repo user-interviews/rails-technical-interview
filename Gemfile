@@ -23,7 +23,7 @@ gem 'react-rails', '~> 2.4.0' # Allows us to use React in the asset pipeline
 
 # Style Gems
 gem 'autoprefixer-rails', '~> 6.0' # apply vendor css prefixes
-gem 'bootstrap', '~> 4.0' # SCSS bootstrap support
+gem 'bootstrap', '~> 4.1' # SCSS bootstrap support
 gem 'font-awesome-rails', '~> 4.7' # font icons support
 
 # Utilities
