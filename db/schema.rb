@@ -11,10 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524003942) do
+ActiveRecord::Schema.define(version: 20180602185229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "participants", force: :cascade do |t|
+    t.text     "first_name"
+    t.text     "last_name"
+    t.text     "email"
+    t.text     "password"
+    t.integer  "rank"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "project_participants", force: :cascade do |t|
+    t.integer  "project_id",     null: false
+    t.integer  "participant_id", null: false
+    t.datetime "approved_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "project_participants", ["participant_id", "project_id"], name: "index_project_participants_on_participant_id_and_project_id", unique: true, using: :btree
+  add_index "project_participants", ["participant_id"], name: "index_project_participants_on_participant_id", using: :btree
+  add_index "project_participants", ["project_id"], name: "index_project_participants_on_project_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.integer  "compensation_amount"

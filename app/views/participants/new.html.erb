@@ -1,0 +1,22 @@
+<div class="form-page">
+  <h1 class="text-center">Create new participant</h1>
+
+  <div class="container"><div class="row"><div class="col-form">
+<form action="<%= participants_path %>" class="ui-form">
+  <label>First name</label>
+  <input name="participant[first_name]" class="form-control" value="<%= @participant.first_name %>" />
+
+  <label>Last name</label>
+  <input name="participant[last_name]" class="form-control" value="<%= @participant.last_name %>" />
+
+
+  <label>Email</label>
+  <input name="participant[email]" class="form-control" value="<%= @participant.email %>" />
+
+  <label>Password</label>
+  <input name="participant[password]" class="form-control" value="<%= @participant.password %>" />
+
+  <input type="submit" value="Sign up!" />
+</form>
+  </div></div></div>
+</div>

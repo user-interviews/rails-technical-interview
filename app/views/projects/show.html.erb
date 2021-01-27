@@ -1,3 +1,7 @@
 <div class="padded-page">
   <h1 class="text-center"><%= @project.internal_name %></h1>
+  <h2 class="text-center"><%= @project.project_participants.count %> participants have signed up!</h2>
+  <% @project.project_participants.each do |pp| %>
+    <%= pp.participant.first_name %> - <%= pp.participant.email %> <%= pp.approved? ? nil : ' [Approved]' %><br>
+  <% end %>
 </div>

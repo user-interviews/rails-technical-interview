@@ -1,0 +1,18 @@
+<div class="form-page">
+  <h1>Sign up for <%= @project.public_title %></h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-form">
+        <%= form_tag perform_project_sign_up_path(@project), method: :get, class: 'ui-form' do %>
+          <label>Email</label>
+          <%= text_field_tag :email, params[:email], class: 'form-control' %>
+
+          <label>Password</label>
+          <%= password_field_tag :password, params[:password], class: 'form-control' %>
+
+          <%= submit_tag 'Sign up!', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

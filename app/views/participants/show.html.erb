@@ -1,0 +1,17 @@
+<div class="padded-page">
+  <div class="container">
+    <h1><%= @participant.full_name %></h1>
+    <ol>
+      <li>First name: <%= @participant.first_name %></li>
+      <li>Last name: <%= @participant.last_name %></li>
+      <li>Email: <%= @participant.email %></li>
+      <li>Password: <%= @participant.password %></li>
+    </ol>
+    <%= link_to 'Edit participant', edit_participant_path(@participant) %>
+
+    <h2>Projects</h2>
+    <% @participant.projects.each do |project| %>
+      <%= project.public_title %> - <%= project.user.email %><br />
+    <% end %>
+  </div>
+</div>

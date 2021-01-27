@@ -10,6 +10,9 @@ class Project < ActiveRecord::Base
   )
   validates_presence_of :user, on: :create
 
+  has_many :project_participants, dependent: :destroy
+  has_many :participants, through: :project_participants
+
   belongs_to :user, required: false
 
   enum interview_type: {
